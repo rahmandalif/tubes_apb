@@ -1,39 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
-class HomePage extends StatefulWidget {
+
+class MyHomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MyHomePageState extends State<MyHomePage> {
   DateTime selectedStartDate = DateTime.now();
   DateTime selectedEndDate = DateTime.now().add(Duration(days: 1));
-  GoogleMapController? mapController;
+  Position? _currentPosition;
+  String _currentAddress = 'Fetching address...';
 
-  final LatLng _center = const LatLng(-6.1753924, 106.8271528); // Example coordinates
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
-  Future<void> _selectDate(BuildContext context, bool isStart) async {
+  Future<void> _selectDate(BuildContext context, bool isStartDate) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: isStart ? selectedStartDate : selectedEndDate,
+      initialDate: isStartDate ? selectedStartDate : selectedEndDate,
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != (isStart ? selectedStartDate : selectedEndDate)) {
+    if (picked != null && picked != (isStartDate ? selectedStartDate : selectedEndDate)) {
       setState(() {
-        if (isStart) {
+        if (isStartDate) {
           selectedStartDate = picked;
         } else {
           selectedEndDate = picked;
         }
       });
     }
+  }
+
+  Future<void> _getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      _currentPosition = position;
+    });
+
+    await _getAddressFromLatLng(position);
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+
+      Placemark place = placemarks[0];
+
+      setState(() {
+        _currentAddress = "${place.locality}, ${place.postalCode}, ${place.country}";
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
   }
 
   @override
@@ -61,7 +86,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: ListTile(
                   title: Text('Pick-up'),
-                  subtitle: Text(DateFormat('MMM dd, yyyy').format(selectedStartDate)),
+                  subtitle: Text(DateTime.now().timeZoneName),
                   trailing: Icon(Icons.calendar_today),
                   onTap: () => _selectDate(context, true),
                 ),
@@ -69,7 +94,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: ListTile(
                   title: Text('Return'),
-                  subtitle: Text(DateFormat('MMM dd, yyyy').format(selectedEndDate)),
+                  subtitle: Text(Date("dd, mm, yyyy").timeZoneName),
                   trailing: Icon(Icons.calendar_today),
                   onTap: () => _selectDate(context, false),
                 ),
@@ -89,7 +114,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(height: 20),
-          Text('Car Type', style: Theme.of(context).textTheme.headlineLarge),
+          Text('Car Type', style: Theme.of(context).textTheme.headlineMedium),
           SizedBox(height: 10),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -104,15 +129,20 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(height: 20),
-          Text('Available Near You', style: Theme.of(context).textTheme.headlineLarge),
+          Text('Available Near You', style: Theme.of(context).textTheme.headlineMedium),
           SizedBox(height: 10),
           Container(
             height: 200, // Fixed height for the map
-            child: GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: _center,
-                zoom: 11.0,
+            child: Center(
+              child: _currentPosition == null
+                  ? CircularProgressIndicator()
+                  : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Current Location:'),
+                  Text('Lat: ${_currentPosition!.latitude}, Long: ${_currentPosition!.longitude}'),
+                  Text('Address: $_currentAddress'),
+                ],
               ),
             ),
           ),
@@ -140,4 +170,3 @@ class CarTypeWidget extends StatelessWidget {
     );
   }
 }
-
