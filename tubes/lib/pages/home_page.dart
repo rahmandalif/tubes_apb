@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
-
+import 'package:intl/intl.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -9,6 +9,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  DateTime selectedDate = DateTime.now();
   DateTime selectedStartDate = DateTime.now();
   DateTime selectedEndDate = DateTime.now().add(Duration(days: 1));
   Position? _currentPosition;
@@ -17,11 +18,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _selectDate(BuildContext context, bool isStartDate) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: isStartDate ? selectedStartDate : selectedEndDate,
-      firstDate: DateTime.now(),
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != (isStartDate ? selectedStartDate : selectedEndDate)) {
+    if (picked != null && picked != selectedDate) {
       setState(() {
         if (isStartDate) {
           selectedStartDate = picked;
@@ -86,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                 child: ListTile(
                   title: Text('Pick-up'),
-                  subtitle: Text(DateTime.now().timeZoneName),
+                  subtitle: Text(DateFormat('dd, MM, yyyy').format(selectedStartDate)),
                   trailing: Icon(Icons.calendar_today),
                   onTap: () => _selectDate(context, true),
                 ),
@@ -94,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                 child: ListTile(
                   title: Text('Return'),
-                  subtitle: Text(Date("dd, mm, yyyy").timeZoneName),
+                  subtitle: Text(DateFormat('dd, MM, yyyy').format(selectedEndDate)),
                   trailing: Icon(Icons.calendar_today),
                   onTap: () => _selectDate(context, false),
                 ),
