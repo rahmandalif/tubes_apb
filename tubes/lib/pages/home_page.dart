@@ -34,6 +34,30 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled, don't continue
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, don't continue
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, don't continue
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+    }
+
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
       _currentPosition = position;
@@ -121,11 +145,11 @@ class _MyHomePageState extends State<MyHomePage> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                CarTypeWidget(carType: 'lib/assets/mobil1.jpg'),
-                CarTypeWidget(carType: 'lib/assets/mobil2.jpg'),
-                CarTypeWidget(carType: 'lib/assets/mobil1.jpg'),
-                CarTypeWidget(carType: 'lib/assets/mobil2.jpg'),
-                CarTypeWidget(carType: 'lib/assets/mobil1.jpg'),
+                CarTypeWidget(carType: 'lib/assets/pict/mobil1.jpg'),
+                CarTypeWidget(carType: 'lib/assets/pict/mobil2.jpg'),
+                CarTypeWidget(carType: 'lib/assets/pict/mobil1.jpg'),
+                CarTypeWidget(carType: 'lib/assets/pict/mobil2.jpg'),
+                CarTypeWidget(carType: 'lib/assets/pict/mobil1.jpg'),
               ],
             ),
           ),
@@ -171,3 +195,5 @@ class CarTypeWidget extends StatelessWidget {
     );
   }
 }
+
+void main() => runApp(MaterialApp(home: MyHomePage()));

@@ -6,56 +6,95 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'JAGARAGA',
-              style: TextStyle(
-                fontSize: 36.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.red,
+      body: Stack(
+        children: [
+          Container(
+            color: Colors.red,
+            height: MediaQuery.of(context).size.height * 0.6,
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: EdgeInsets.only(top: 60), // Adjust the padding to fit your design
+              child: Column(
+                children: [
+                  Image.asset(
+                    'lib/assets/pict/mobil3.png', // Path to your car image
+                    width: MediaQuery.of(context).size.width * 0.8,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'JAGARAGA',
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Roboto-Bold.ttf', // Use custom font family if added
+                    ),
+                  ),
+                ],
               ),
             ),
-            Text(
-              'Rent a vehicle safely and comfortably',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.grey,
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                          MaterialPageRoute(builder : (context) => SignUpPage())
+                      );
+
+                      // Handle Sign Up
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.red, backgroundColor: Colors.white,
+                      minimumSize: Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        side: BorderSide(color: Colors.red),
+
+                      ),
+                    ),
+                    child: Text('Sign Up', style: TextStyle(color: Colors.red)),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder : (context) => LoginPage()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white, backgroundColor: Colors.red,
+                      minimumSize: Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+                    child: Text('Login', style: TextStyle(color: Colors.white)),
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: 50),
-            ElevatedButton(
-              child: Text('Sign Up'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                textStyle: TextStyle(fontSize: 18),
-              ),
-            ),
-            TextButton(
-              child: Text('Login'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              },
-              style: TextButton.styleFrom(
-                textStyle: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
+void main() => runApp(MaterialApp(home: SplashScreen()));
