@@ -12,6 +12,7 @@ class JagaragaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Jagaraga',
       theme: ThemeData(
         primarySwatch: Colors.red,

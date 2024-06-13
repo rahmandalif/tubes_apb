@@ -10,12 +10,12 @@ class SplashScreen extends StatelessWidget {
         children: [
           Container(
             color: Colors.red,
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: MediaQuery.of(context).size.height * 0.5,
           ),
           Align(
             alignment: Alignment.topCenter,
             child: Padding(
-              padding: EdgeInsets.only(top: 60), // Adjust the padding to fit your design
+              padding: EdgeInsets.only(top: 180), // Adjust the padding to fit your design
               child: Column(
                 children: [
                   Image.asset(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
+import 'package:tubes/pages/camera.dart';
+
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -139,6 +141,35 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           SizedBox(height: 20),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder : (context) => PickImage())
+              );
+            },
+            child: Container(
+              width: 200,
+              height: 200,
+              color: Colors.transparent, // Set the color to make it visible
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.camera_alt_outlined,
+                    color: Colors.black,
+                    size: 50,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Camera',
+                    style: TextStyle(color: Colors.red, fontSize: 24),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
           Text('Car Type', style: Theme.of(context).textTheme.headlineMedium),
           SizedBox(height: 10),
           SingleChildScrollView(
@@ -188,8 +219,8 @@ class CarTypeWidget extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 8.0),
       child: Image.asset(
         carType,
-        width: 300,
-        height: 300,
+        width: 350,
+        height: 250,
         fit: BoxFit.cover,
       ),
     );
