@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "854361205158",
+    "project_id": "apb-jagaraga-firebase",
+    "storage_bucket": "apb-jagaraga-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854361205158:android:e1f5363ca7324c54e8c767",
+        "android_client_info": {
+          "package_name": "com.tubes.tubes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe1IZ0vv3kW2NnXm-g2qhQBRUkjY-Hl2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

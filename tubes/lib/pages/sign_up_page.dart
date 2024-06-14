@@ -3,66 +3,68 @@ import 'home_page.dart';
 import 'login_page.dart';
 
 class SignUpPage extends StatelessWidget {
+  const SignUpPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
+        title: const Text('Sign Up'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Your email address',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.emailAddress,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
               ),
               obscureText: true,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Nickname',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             ElevatedButton(
-              child: Text('Sign Up'),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                  MaterialPageRoute(builder: (context) => const MyHomePage()),
                 );
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                textStyle: TextStyle(fontSize: 18),
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                textStyle: const TextStyle(fontSize: 18),
               ),
+              child: const Text('Sign Up'),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             TextButton(
-              child: Text('Already have an account? Login'),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
                 );
               },
               style: TextButton.styleFrom(
-                textStyle: TextStyle(fontSize: 18, color: Colors.grey),
+                textStyle: const TextStyle(fontSize: 18, color: Colors.grey),
               ),
+              child: const Text('Already have an account? Login'),
             ),
           ],
         ),
