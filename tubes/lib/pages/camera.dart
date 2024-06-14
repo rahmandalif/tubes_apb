@@ -17,7 +17,7 @@ class _PickImageState extends State<PickImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFA79277),
+      backgroundColor: const Color(0xFFA79277),
       body: Center(
         child: Stack(
           children: [
@@ -61,7 +61,7 @@ class _PickImageState extends State<PickImage> {
 
   void showImagePickerOption(BuildContext context) {
     showModalBottomSheet(
-      backgroundColor: Color(0xFFEAD8C0),
+      backgroundColor: const Color(0xFFEAD8C0),
       context: context,
       builder: (builder) {
         return Padding(

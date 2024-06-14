@@ -6,6 +6,8 @@ import 'package:tubes/pages/camera.dart';
 
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -13,7 +15,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   DateTime selectedDate = DateTime.now();
   DateTime selectedStartDate = DateTime.now();
-  DateTime selectedEndDate = DateTime.now().add(Duration(days: 1));
+  DateTime selectedEndDate = DateTime.now().add(const Duration(days: 1));
   Position? _currentPosition;
   String _currentAddress = 'Fetching address...';
 
@@ -92,13 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Jagaraga'),
+        title: const Text('Jagaraga'),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: <Widget>[
           TextFormField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'What are you looking for?',
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
@@ -106,53 +108,53 @@ class _MyHomePageState extends State<MyHomePage> {
               fillColor: Colors.white,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: ListTile(
-                  title: Text('Pick-up'),
+                  title: const Text('Pick-up'),
                   subtitle: Text(DateFormat('dd, MM, yyyy').format(selectedStartDate)),
-                  trailing: Icon(Icons.calendar_today),
+                  trailing: const Icon(Icons.calendar_today),
                   onTap: () => _selectDate(context, true),
                 ),
               ),
               Expanded(
                 child: ListTile(
-                  title: Text('Return'),
+                  title: const Text('Return'),
                   subtitle: Text(DateFormat('dd, MM, yyyy').format(selectedEndDate)),
-                  trailing: Icon(Icons.calendar_today),
+                  trailing: const Icon(Icons.calendar_today),
                   onTap: () => _selectDate(context, false),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               // Perform search action
             },
-            child: Text('Search Car'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              textStyle: TextStyle(fontSize: 18),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              textStyle: const TextStyle(fontSize: 18),
             ),
+            child: const Text('Search Car'),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           GestureDetector(
             onTap: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder : (context) => PickImage())
+                  MaterialPageRoute(builder : (context) => const PickImage())
               );
             },
             child: Container(
               width: 200,
               height: 200,
               color: Colors.transparent, // Set the color to make it visible
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
@@ -169,10 +171,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text('Car Type', style: Theme.of(context).textTheme.headlineMedium),
-          SizedBox(height: 10),
-          SingleChildScrollView(
+          const SizedBox(height: 10),
+          const SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
@@ -184,18 +186,18 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text('Available Near You', style: Theme.of(context).textTheme.headlineMedium),
-          SizedBox(height: 10),
-          Container(
+          const SizedBox(height: 10),
+          SizedBox(
             height: 200, // Fixed height for the map
             child: Center(
               child: _currentPosition == null
-                  ? CircularProgressIndicator()
+                  ? const CircularProgressIndicator()
                   : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Current Location:'),
+                  const Text('Current Location:'),
                   Text('Lat: ${_currentPosition!.latitude}, Long: ${_currentPosition!.longitude}'),
                   Text('Address: $_currentAddress'),
                 ],
@@ -211,12 +213,12 @@ class _MyHomePageState extends State<MyHomePage> {
 class CarTypeWidget extends StatelessWidget {
   final String carType;
 
-  CarTypeWidget({required this.carType});
+  const CarTypeWidget({Key? key, required this.carType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Image.asset(
         carType,
         width: 350,
@@ -227,4 +229,4 @@ class CarTypeWidget extends StatelessWidget {
   }
 }
 
-void main() => runApp(MaterialApp(home: MyHomePage()));
+void main() => runApp(const MaterialApp(home: MyHomePage()));
