@@ -176,10 +176,9 @@ class _MyHomePageState extends State<MyHomePage> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                CarTypeWidget(carType: 'lib/assets/pict/mobil1.jpg'),
                 CarTypeWidget(carType: 'lib/assets/pict/mobil2.jpg'),
-                CarTypeWidget(carType: 'lib/assets/pict/mobil1.jpg'),
-                CarTypeWidget(carType: 'lib/assets/pict/mobil2.jpg'),
+                CarTypeWidget(carType: 'lib/assets/pict/mobil4.png'),
+                CarTypeWidget(carType: 'lib/assets/pict/mobil5.png'),
                 CarTypeWidget(carType: 'lib/assets/pict/mobil1.jpg'),
               ],
             ),
